@@ -28,6 +28,11 @@ class my_clk:
         #print("{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo))
         return "{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo)
 
+    def set_time(self):
+        self.hora = int(input("\nIntroduzca la hora: "))
+        self.minuto = int(input("\nIntroduzca los minutos: "))
+        self.segundo = int(input("\nIntroduzca los segundos: "))
+        self.let_my_time()
 #myclock = my_clk()
 #myclock.let_my_time()
 #myclock.get_time()

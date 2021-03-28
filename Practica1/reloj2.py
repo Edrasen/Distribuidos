@@ -34,7 +34,7 @@ class reloj:
 
     def new_time(self):
         self.my_clock = my_clk()
-        t_new_c = Thread(target=self.my_clock.prueba)
+        t_new_c = Thread(target=self.my_clock.set_time)
         t_new_c.daemon = True
         t_new_c.start()
         self.init_new_clk()
