@@ -7,6 +7,8 @@ root.title("MULTIPLE CLOCKS")
 t_clocks = []
 
 class reloj: 
+    clock = NONE
+    flag = 1
     def init_clock(self,r,c):
         self.current_time=""
         self.clock = Label(root)    
@@ -16,11 +18,16 @@ class reloj:
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
         self.clock.config(text=self.current_time,bg="black",fg="green",font="Arial 50 bold")
-        self.clock.after(200,self.times)
-    
-    def change(self):
-        self.current_time.replace(self.current_time,"22:13:23")
-        self.clock.config(text="self.current_time",bg="black",fg="green",font="Arial 50 bold")
+        if self.flag:
+            self.clock.after(200,self.times)
+        else:
+            self.stop()
+
+    def stop(self):       
+        self.current_time=time.strftime("%H:%M:%S")
+        self.clock.config(text=self.current_time,bg="black",fg="green",font="Arial 50 bold")
+    #myclk.clock.after(200,times)
+ 
 
 
 
@@ -36,5 +43,11 @@ for tclk in t_clocks:
     tclk.daemon = True
     tclk.start()
 
+def change(myclk=clks[0]):
+    myclk.flag = 0
+    #myclk.clock.config(text="avr",bg="black",fg="green",font="Arial 50 bold")
 
+
+boton = Button(root,text="AVR",command=change)
+boton.grid(row=2, column=2)
 root.mainloop()
