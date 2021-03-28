@@ -1,16 +1,12 @@
 from  tkinter import *
 import time
-from datetime import time
-import time
 from threading import Thread
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
 t_clocks = []
 
-
 class reloj: 
-    global clock,flag
     def init_clock(self,r,c):
         self.current_time=""
         self.clock = Label(root)    
