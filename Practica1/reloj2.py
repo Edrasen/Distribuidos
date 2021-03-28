@@ -16,7 +16,7 @@ class reloj:
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
         self.clock.config(text=self.current_time,bg="black",fg="green",font="Arial 50 bold")
-        self.clock.after(100,self.times)
+        self.clock.after(200,self.times)
     
     def change(self):
         self.current_time.replace(self.current_time,"22:13:23")
