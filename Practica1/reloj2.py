@@ -1,7 +1,7 @@
 from  tkinter import *
 import time
 from threading import Thread
-import my_Time
+from my_Time import my_clk
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
@@ -17,6 +17,7 @@ class reloj:
         self.clock = Label(root)    
         self.clock.grid(row=r+2,column=c,pady=25,padx=25)
         self.times()
+        #self.new_time()
 
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
@@ -32,16 +33,20 @@ class reloj:
         self.new_time()
 
     def new_time(self):
-        my_Time.prueba()
+        self.my_clock = my_clk()
+        t_new_c = Thread(target=self.my_clock.prueba)
+        t_new_c.daemon = True
+        t_new_c.start()
+        self.init_new_clk()
 
     def init_new_clk(self):
-        self.my_new_t = my_Time.get_time()
+        self.my_new_t = my_clk.get_time(self.my_clock)
         self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
-        self.clock.after(100,self.times)        
+        self.clock.after(100,self.init_new_clk)        
 
 def change(opt):
     clks[opt-1].flag = 0
-
+    
 
 for r in range(0,2):
     for c in range(0,2):

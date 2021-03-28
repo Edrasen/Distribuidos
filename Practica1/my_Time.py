@@ -1,30 +1,33 @@
 import time 
 from threading import Thread
 
-hora = 23
-minuto = 59
-segundo = 51
+class my_clk:
+    hora = 23
+    minuto = 59
+    segundo = 51
 
-def let_my_time():
-    global hora, segundo, minuto
-    while True:
-        segundo+=1
-        if(segundo==60):
-            segundo=0
-            minuto+=1
-        if(minuto==60):
-            minuto=0
-            hora+=1
-        if(hora==24):
-            hora=0
-        time.sleep(1)
+    def let_my_time(self):
+        while True:
+            self.segundo+=1
+            if(self.segundo==60):
+                self.segundo=0
+                self.minuto+=1
+            if(self.minuto==60):
+                self.minuto=0
+                self.hora+=1
+            if(self.hora==24):
+                self.hora=0
+            time.sleep(1)
+            self.get_time()
+    
+    def prueba(self):
+        self.let_my_time()
+
     #print("{:02}:{:02}:{:02}".format(hora,minuto,segundo))
+    def get_time(self):
+        #print("{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo))
+        return "{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo)
 
-def new_clk():
-    Thread(target=let_my_time)
-
-def get_time():
-    return "{:02}:{:02}:{:02}".format(hora,minuto,segundo)
-
-def prueba():
-    new_clk()
+#myclock = my_clk()
+#myclock.let_my_time()
+#myclock.get_time()
