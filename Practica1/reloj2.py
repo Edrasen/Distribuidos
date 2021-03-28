@@ -4,7 +4,9 @@ from threading import Thread
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
+root.configure(bg="white")
 t_clocks = []
+clks = []
 
 class reloj: 
     clock = NONE
@@ -17,7 +19,7 @@ class reloj:
 
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
-        self.clock.config(text=self.current_time,bg="black",fg="green",font="Arial 50 bold")
+        self.clock.config(text=self.current_time,bg="white",fg="blue",font="Verdana 50")
         if self.flag:
             self.clock.after(200,self.times)
         else:
@@ -25,10 +27,13 @@ class reloj:
 
     def stop(self):       
         self.current_time=time.strftime("%H:%M:%S")
-        self.clock.config(text=self.current_time,bg="black",fg="green",font="Arial 50 bold")
+        self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 50")
 
 
-clks = []
+def change(opt):
+    clks[opt-1].flag = 0
+
+
 for r in range(0,2):
     for c in range(0,2):
         clk = reloj()
@@ -41,17 +46,12 @@ for tclk in t_clocks:
     tclk.start()
 
 
-def change(opt):
-    clks[opt-1].flag = 0
-    
-
-
-boton = Button(root,text="MODIFICAR1",command=lambda: change(1))
-boton.grid(row=0, column=0)
-boton = Button(root,text="MODIFICAR2",command=lambda: change(2))
-boton.grid(row=0, column=1)
-boton = Button(root,text="MODIFICAR3",command=lambda: change(3))
-boton.grid(row=4, column=0)
-boton = Button(root,text="MODIFICAR4",command=lambda: change(4))
-boton.grid(row=4, column=1)
+boton = Button(root,text="MODIFICAR 1",command=lambda: change(1))
+boton.grid(row=1, column=0)
+boton2 = Button(root,text="MODIFICAR 2",command=lambda: change(2))
+boton2.grid(row=1, column=1)
+boton3 = Button(root,text="MODIFICAR 3",command=lambda: change(3))
+boton3.grid(row=4, column=0)
+boton4 = Button(root,text="MODIFICAR 4",command=lambda: change(4))
+boton4.grid(row=4, column=1)
 root.mainloop()
