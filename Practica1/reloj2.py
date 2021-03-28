@@ -1,6 +1,7 @@
 from  tkinter import *
 import time
 from threading import Thread
+import my_Time
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
@@ -28,7 +29,15 @@ class reloj:
     def stop(self):       
         self.current_time=time.strftime("%H:%M:%S")
         self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 50")
+        self.new_time()
 
+    def new_time(self):
+        my_Time.prueba()
+
+    def init_new_clk(self):
+        self.my_new_t = my_Time.get_time()
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        self.clock.after(100,self.times)        
 
 def change(opt):
     clks[opt-1].flag = 0
@@ -54,4 +63,5 @@ boton3 = Button(root,text="MODIFICAR 3",command=lambda: change(3))
 boton3.grid(row=4, column=0)
 boton4 = Button(root,text="MODIFICAR 4",command=lambda: change(4))
 boton4.grid(row=4, column=1)
+
 root.mainloop()
