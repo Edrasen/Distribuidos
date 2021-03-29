@@ -34,7 +34,7 @@ class my_clk:
     minuto = int(parts[1])
     segundo = int(parts[2])
 
-    def let_my_time(self):
+    def let_my_time(self,vel):
         while True:
             self.segundo+=1
             if(self.segundo==60):
@@ -45,11 +45,11 @@ class my_clk:
                 self.hora+=1
             if(self.hora==24):
                 self.hora=0
-            time.sleep(1)
+            time.sleep(1/vel)
             self.get_time()
     
     def prueba(self):
-        self.let_my_time()
+        self.let_my_time(1)
 
     #print("{:02}:{:02}:{:02}".format(hora,minuto,segundo))
     def get_time(self):
@@ -71,19 +71,25 @@ class my_clk:
         self.lbls.grid(column=0,row=2)
         self.in_s = Entry(self.modificar,width=15)
         self.in_s.grid(column=1,row=2)
-        self.ac = Button(self.modificar,text="Aceptar", command=self.accept)
-        self.ac.grid(column=1,row=4)
+
+        self.lblv = Label(self.modificar, text="Velocidad: ")
+        self.lblv.grid(column=0,row=3)
+        self.in_v = Entry(self.modificar,width=15)
+        self.in_v.grid(column=1,row=3)
+
+        self.ac = Button(self.modificar,text="Aceptar", command=lambda : self.accept(int(self.in_v.get())))
+        self.ac.grid(column=1,row=5)
         self.modificar.mainloop()
         # self.hora = int((input("Hora: ")))
         # self.minuto = int(input("Minuto: "))
         # self.segundo = int(input("Segundo: "))
         # self.let_my_time()
         
-    def accept(self):
+    def accept(self,vel):
         self.hora = int(self.in_h.get())
         self.minuto = int(self.in_m.get())
         self.segundo = int(self.in_s.get())
         self.modificar.destroy()
-        self.let_my_time()
+        self.let_my_time(vel)
         return 
 
