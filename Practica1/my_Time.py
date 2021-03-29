@@ -2,29 +2,6 @@ import time
 from threading import Thread
 from tkinter import *
 
-# modificar = Tk()
-# modificar.title("modificar reloj")
-# lblh = Label(modificar, text="Hora: ")
-# lblh.grid(column=0,row=0)
-# in_h = Entry(modificar,width=15)
-# in_h.grid(column=1,row=0)
-# lblm = Label(modificar, text="Minuto: ")
-# lblm.grid(column=0,row=1)
-# in_m = Entry(modificar,width=15)
-# in_m.grid(column=1,row=1)
-# lbls = Label(modificar, text="Segundo: ")
-# lbls.grid(column=0,row=2)
-# in_s = Entry(modificar,width=15)
-# in_s.grid(column=1,row=2)
-# ac = Button(modificar,text="Aceptar")
-# ac.grid(column=1,row=4)
-
-# def accept():
-#     new_h = in_h.get()
-#     new_m = in_m.get()
-#     new_s = in_s.get()
-#     modificar.destroy()
-
 #00:00:00
 
 class my_clk:
@@ -51,9 +28,8 @@ class my_clk:
     def prueba(self):
         self.let_my_time(1)
 
-    #print("{:02}:{:02}:{:02}".format(hora,minuto,segundo))
+    
     def get_time(self):
-        #print("{:02}:{:02}:{:02}".format(hora,minuto,segundo))
         return "{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo)
 
     def set_time(self):

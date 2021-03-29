@@ -55,9 +55,7 @@ class reloj:
             self.flag = 1
             self.stop2()
         
-   
         
-
 def change(opt):
     clks[opt-1].flag = 0
     
