@@ -10,11 +10,7 @@ t_clocks = []
 clks = []
 
 class reloj: 
-    clock = NONE
     flag = 1
-    new_h = 0
-    new_m = 0
-    new_s = 0
     def init_clock(self,r,c):
         self.current_time=""
         self.clock = Label(root)    
@@ -43,11 +39,22 @@ class reloj:
         t_new_c.start()
         self.init_new_clk()
 
-    def init_new_clk(self):
-        self.my_new_t = my_clk.get_time(self.my_clock)        
-        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
-        self.clock.after(100,self.init_new_clk)        
 
+    def stop2(self):       
+        self.my_new_t = self.my_clock.get_time()
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        self.new_time()
+
+
+    def init_new_clk(self):
+        self.my_new_t = self.my_clock.get_time()        
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        if self.flag:
+            self.clock.after(100,self.init_new_clk)        
+        else:
+            self.flag = 1
+            self.stop2()
+        
    
         
 
