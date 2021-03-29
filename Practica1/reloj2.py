@@ -12,6 +12,9 @@ clks = []
 class reloj: 
     clock = NONE
     flag = 1
+    new_h = 0
+    new_m = 0
+    new_s = 0
     def init_clock(self,r,c):
         self.current_time=""
         self.clock = Label(root)    
@@ -25,6 +28,7 @@ class reloj:
         if self.flag:
             self.clock.after(200,self.times)
         else:
+            self.flag = 1
             self.stop()
 
     def stop(self):       
@@ -40,9 +44,12 @@ class reloj:
         self.init_new_clk()
 
     def init_new_clk(self):
-        self.my_new_t = my_clk.get_time(self.my_clock)
+        self.my_new_t = my_clk.get_time(self.my_clock)        
         self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
         self.clock.after(100,self.init_new_clk)        
+
+   
+        
 
 def change(opt):
     clks[opt-1].flag = 0
@@ -60,6 +67,8 @@ for tclk in t_clocks:
     tclk.start()
 
 
+
+
 boton = Button(root,text="MODIFICAR 1",command=lambda: change(1))
 boton.grid(row=1, column=0)
 boton2 = Button(root,text="MODIFICAR 2",command=lambda: change(2))
@@ -68,5 +77,7 @@ boton3 = Button(root,text="MODIFICAR 3",command=lambda: change(3))
 boton3.grid(row=4, column=0)
 boton4 = Button(root,text="MODIFICAR 4",command=lambda: change(4))
 boton4.grid(row=4, column=1)
+
+
 
 root.mainloop()
