@@ -14,16 +14,16 @@ class my_clk:
     def let_my_time(self,vel):
         while True:
             self.segundo+=1
-            if(self.segundo==60):
+            if(self.segundo>=60):
                 self.segundo=0
                 self.minuto+=1
-            if(self.minuto==60):
-                self.selminuto=0
+            if(self.minuto>=60):
+                self.minuto=0
                 self.hora+=1
-            if(self.hora==24):
+            if(self.hora>=24):
                 self.hora=0
             time.sleep(1/vel)
-            self.get_time()
+            #self.get_time()
     
     def prueba(self):
         self.let_my_time(1)
@@ -62,9 +62,9 @@ class my_clk:
         # self.let_my_time()
         
     def accept(self,vel):
-        self.hora = int(self.in_h.get())
-        self.minuto = int(self.in_m.get())
-        self.segundo = int(self.in_s.get())
+        self.hora = int(self.in_h.get())%24
+        self.minuto = int(self.in_m.get())%60
+        self.segundo = int(self.in_s.get())%60
         self.modificar.destroy()
         self.let_my_time(vel)
         return 
