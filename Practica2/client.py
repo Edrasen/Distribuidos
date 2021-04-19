@@ -4,7 +4,7 @@ from tkinter import *
 from threading import Thread
 
 c = rpyc.connect('localhost',12345)
-c.root.prueba()
+c.root.set_time()
 
 
 def get_time():
