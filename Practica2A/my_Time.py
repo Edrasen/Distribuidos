@@ -66,6 +66,7 @@ class my_clk:
         self.minuto = int(self.in_m.get())%60
         self.segundo = int(self.in_s.get())%60
         self.modificar.destroy()
+        print("Clock modified")
         self.let_my_time(vel)
         return 
 

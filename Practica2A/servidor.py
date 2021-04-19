@@ -19,7 +19,7 @@ class reloj:
         self.clock = Label(root)    
         self.clock.grid(row=r+2,column=c,pady=25,padx=25)
         self.times()
-        #self.new_time()
+    #self.new_time()
 
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
@@ -52,7 +52,7 @@ class reloj:
 
     def init_new_clk(self):
         self.my_new_t = self.my_clock.get_time()        
-        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        self.clock.config(text=self.my_new_t,bg="white",fg="blue",font="Verdana 50")
         if self.flag:
             self.clock.after(100,self.init_new_clk)        
         else:
@@ -62,14 +62,18 @@ class reloj:
         
 def change(opt):
     clks[opt-1].flag = 0
+    print("Modifying clock {}".format(opt-1))
     
 
 for r in range(0,2):
-    for c in range(0,2):
-        clk = reloj()
-        clks.append(clk)
-        t_clock = Thread(target=clk.init_clock,args=(r,c))
-        t_clocks.append(t_clock)
+    for c in range(0,3):
+        if r == 0 and (c == 0 or c == 2):
+            pass
+        else:
+            clk = reloj()
+            clks.append(clk)
+            t_clock = Thread(target=clk.init_clock,args=(r,c))
+            t_clocks.append(t_clock)
 
 for tclk in t_clocks:
     tclk.daemon = True
@@ -88,15 +92,14 @@ class RPC_Clock(rpyc.Service):
 
 
 
-boton = Button(root,text="MODIFICAR 1",command=lambda: change(1))
-boton.grid(row=1, column=0)
-boton2 = Button(root,text="MODIFICAR 2",command=lambda: change(2))
-boton2.grid(row=1, column=1)
-boton3 = Button(root,text="MODIFICAR 3",command=lambda: change(3))
+boton = Button(root,text="MODIFICAR MASTER",command=lambda: change(1))
+boton.grid(row=1, column=1)
+boton3 = Button(root,text="MODIFICAR 1",command=lambda: change(2))
 boton3.grid(row=4, column=0)
-boton4 = Button(root,text="MODIFICAR 4",command=lambda: change(4))
+boton4 = Button(root,text="MODIFICAR 2",command=lambda: change(3))
 boton4.grid(row=4, column=1)
-
+boton4 = Button(root,text="MODIFICAR 3",command=lambda: change(4))
+boton4.grid(row=4, column=2)
 
 
 if __name__ == "__main__":
