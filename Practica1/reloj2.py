@@ -23,6 +23,7 @@ class reloj:
         self.clock.config(text=self.current_time,bg="white",fg="blue",font="Verdana 50")
         if self.flag:
             self.clock.after(200,self.times)
+            print(self.current_time)
         else:
             self.flag = 1
             self.stop()
