@@ -3,6 +3,7 @@ import time
 from threading import Thread
 from my_Time import my_clk
 
+
 root=Tk()
 root.title("MULTIPLE CLOCKS")
 root.configure(bg="white")
@@ -71,6 +72,8 @@ for r in range(0,2):
 for tclk in t_clocks:
     tclk.daemon = True
     tclk.start()
+
+
 
 
 

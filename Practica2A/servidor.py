@@ -1,82 +1,108 @@
-import rpyc 
+from  tkinter import *
 import time
-from rpyc.utils.server import ThreadedServer
-from tkinter import *
+import rpyc
 from threading import Thread
+from my_Time import my_clk
+from rpyc.utils.server import ThreadedServer
 
 
-        #return "{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo)
+root=Tk()
+root.title("MULTIPLE CLOCKS")
+root.configure(bg="white")
+t_clocks = []
+clks = []
+
+class reloj: 
+    flag = 1
+    def init_clock(self,r,c):
+        self.current_time=""
+        self.clock = Label(root)    
+        self.clock.grid(row=r+2,column=c,pady=25,padx=25)
+        self.times()
+        #self.new_time()
+
+    def times(self):
+        self.current_time=time.strftime("%H:%M:%S")
+        self.clock.config(text=self.current_time,bg="white",fg="blue",font="Verdana 50")
+        if self.flag:
+            self.clock.after(200,self.times)
+            #print(self.current_time)
+        else:
+            self.flag = 1
+            self.stop()
+
+    def stop(self):       
+        self.current_time=time.strftime("%H:%M:%S")
+        self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 50")
+        self.new_time()
+
+    def new_time(self):
+        self.my_clock = my_clk()
+        t_new_c = Thread(target=self.my_clock.set_time)
+        t_new_c.daemon = True
+        t_new_c.start()
+        self.init_new_clk()
+
+
+    def stop2(self):       
+        self.my_new_t = self.my_clock.get_time()
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        self.new_time()
+
+
+    def init_new_clk(self):
+        self.my_new_t = self.my_clock.get_time()        
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        if self.flag:
+            self.clock.after(100,self.init_new_clk)        
+        else:
+            self.flag = 1
+            self.stop2()
+        
+        
+def change(opt):
+    clks[opt-1].flag = 0
+    
+
+for r in range(0,2):
+    for c in range(0,2):
+        clk = reloj()
+        clks.append(clk)
+        t_clock = Thread(target=clk.init_clock,args=(r,c))
+        t_clocks.append(t_clock)
+
+for tclk in t_clocks:
+    tclk.daemon = True
+    tclk.start()
+
 
 class RPC_Clock(rpyc.Service):
+    def exposed_time1(self):
+        return clks[0].my_new_t
+    def exposed_time2(self):
+        return clks[1].my_new_t
+    def exposed_time3(self):
+        return clks[2].my_new_t
+    # def exposed_time(self):
+    #     return clks[0].my_new_t    
 
-    def __init__(self):
-        self.cur_time = time.strftime("%H:%M:%S")
-        self.parts  = self.cur_time.split(':')
-        self.hora = int(self.parts[0])
-        self.minuto = int(self.parts[1])
-        self.segundo = int(self.parts[2])
-        self.vel = 1
 
-    def let_my_time(self):
-        while True:
-            self.segundo+=1
-            if(self.segundo>=60):
-                self.segundo=0
-                self.minuto+=1
-            if(self.minuto>=60):
-                self.minuto=0
-                self.hora+=1
-            if(self.hora>=24):
-                self.hora=0
-            time.sleep(1/self.vel)
-            
-    
-    def exposed_prueba(self):
-        print("New clock")
-        clk = Thread(target=self.let_my_time)
-        clk.start()
 
-    def exposed_get_time(self):
-        return "{:02}:{:02}:{:02}".format(self.hora,self.minuto,self.segundo)
+boton = Button(root,text="MODIFICAR 1",command=lambda: change(1))
+boton.grid(row=1, column=0)
+boton2 = Button(root,text="MODIFICAR 2",command=lambda: change(2))
+boton2.grid(row=1, column=1)
+boton3 = Button(root,text="MODIFICAR 3",command=lambda: change(3))
+boton3.grid(row=4, column=0)
+boton4 = Button(root,text="MODIFICAR 4",command=lambda: change(4))
+boton4.grid(row=4, column=1)
 
-    def exposed_set_time(self):
-        self.modificar = Tk()
-        self.modificar.title("modificar reloj")
-        self.lblh = Label(self.modificar, text="Hora: ")
-        self.lblh.grid(column=0,row=0)
-        self.in_h = Entry(self.modificar,width=15)
-        self.in_h.grid(column=1,row=0)
-        self.lblm = Label(self.modificar, text="Minuto: ")
-        self.lblm.grid(column=0,row=1)
-        self.in_m = Entry(self.modificar,width=15)
-        self.in_m.grid(column=1,row=1)
-        self.lbls = Label(self.modificar, text="Segundo: ")
-        self.lbls.grid(column=0,row=2)
-        self.in_s = Entry(self.modificar,width=15)
-        self.in_s.grid(column=1,row=2)
 
-        self.lblv = Label(self.modificar, text="Velocidad: ")
-        self.lblv.grid(column=0,row=3)
-        self.in_v = Entry(self.modificar,width=15)
-        self.in_v.grid(column=1,row=3)
-
-        self.ac = Button(self.modificar,text="Aceptar", command=lambda : self.accept(int(self.in_v.get())))
-        self.ac.grid(column=1,row=5)
-        self.modificar.mainloop()
-        
-        
-    def accept(self,vel):
-        self.hora = int(self.in_h.get())%24
-        self.minuto = int(self.in_m.get())%60
-        self.segundo = int(self.in_s.get())%60
-        self.vel = int(vel)
-        self.modificar.destroy()
-        print("New clock started")
-        clk = Thread(target=self.let_my_time)
-        clk.start()
-        return
 
 if __name__ == "__main__":
     server = ThreadedServer(RPC_Clock, port=12345)
     print("Server started...")
-    server.start()
+    s = Thread(target=server.start)
+    s.daemon = True
+    s.start()
+    root.mainloop()

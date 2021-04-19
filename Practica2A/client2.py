@@ -16,7 +16,7 @@ class Reloj:
         # print(c.root.get_time())
         # time.sleep(1)
         # get_time()
-        self.my_new_t = c.root.time1()        
+        self.my_new_t = c.root.time2()        
         self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
         if self.flag:
             self.clock.after(100,self.get_time)        
