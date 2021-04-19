@@ -82,11 +82,11 @@ for tclk in t_clocks:
 
 class RPC_Clock(rpyc.Service):
     def exposed_time1(self):
-        return clks[0].my_new_t
-    def exposed_time2(self):
         return clks[1].my_new_t
-    def exposed_time3(self):
+    def exposed_time2(self):
         return clks[2].my_new_t
+    def exposed_time3(self):
+        return clks[3].my_new_t
     # def exposed_time(self):
     #     return clks[0].my_new_t    
 
