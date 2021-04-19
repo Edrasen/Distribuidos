@@ -15,6 +15,7 @@ class RPC_Clock(rpyc.Service):
         self.hora = int(self.parts[0])
         self.minuto = int(self.parts[1])
         self.segundo = int(self.parts[2])
+        self.vel = 1
 
     def let_my_time(self):
         while True:
@@ -27,8 +28,8 @@ class RPC_Clock(rpyc.Service):
                 self.hora+=1
             if(self.hora>=24):
                 self.hora=0
-            time.sleep(1/1)
-    
+            time.sleep(1/self.vel)
+            
     
     def exposed_prueba(self):
         print("New clock")
@@ -62,15 +63,13 @@ class RPC_Clock(rpyc.Service):
         self.ac = Button(self.modificar,text="Aceptar", command=lambda : self.accept(int(self.in_v.get())))
         self.ac.grid(column=1,row=5)
         self.modificar.mainloop()
-        # self.hora = int((input("Hora: ")))
-        # self.minuto = int(input("Minuto: "))
-        # self.segundo = int(input("Segundo: "))
-        # self.let_my_time()
+        
         
     def accept(self,vel):
         self.hora = int(self.in_h.get())%24
         self.minuto = int(self.in_m.get())%60
         self.segundo = int(self.in_s.get())%60
+        self.vel = int(vel)
         self.modificar.destroy()
         print("New clock started")
         clk = Thread(target=self.let_my_time)
