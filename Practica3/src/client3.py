@@ -9,7 +9,6 @@ c = rpyc.connect('localhost',12345)
 root=Tk()
 root.title("MY CLOCK")
 root.configure(bg="white")
-datos = Text(root,width=40, height=10)
 
 class Reloj:
     flag = 1
@@ -17,7 +16,7 @@ class Reloj:
         # print(c.root.get_time())
         # time.sleep(1)
         # get_time()
-        self.my_new_t = c.root.time1()        
+        self.my_new_t = c.root.time3()        
         self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
         if self.flag:
             self.clock.after(100,self.get_time)        
@@ -31,11 +30,8 @@ class Reloj:
         self.current_time=""
         self.clock = Label(root)    
         self.clock.grid(row=2,column=2,pady=25,padx=25)
-        datos.grid(row=2,column=3,pady=5,padx=5)       
-        datos.insert(INSERT, "Hola mundo")
         self.get_time()
     
-
 
 
 myclk = Reloj()
