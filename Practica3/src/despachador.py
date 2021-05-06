@@ -24,20 +24,23 @@ for doc in docs:
 print(books)
 
 def set_status():
-    datos = ""
-    pos = random.randint(0,len(books)-1)
-    random_book = books[pos]
-    random_b = collection.find_one({"datos.name": random_book})
-    if random_b['status'] == "D":
-        collection.update({
-            "datos.name": random_book}, 
-            { "$set":{ "status": "N"}})
-        datos = "Nombre: {} \nAutor: {} \nAño: {:n} \nEditorial: {}".format(random_b['datos']['name'],random_b['datos']['autor'],random_b['datos']['anio'],random_b['datos']['editorial'])
-        books.remove(random_book)
-        return datos
+    if len(books) > 0:
+        datos = ""
+        pos = random.randint(0,len(books)-1)
+        random_book = books[pos]
+        random_b = collection.find_one({"datos.name": random_book})
+        if random_b['status'] == "D":
+            collection.update({
+                "datos.name": random_book}, 
+                { "$set":{ "status": "N"}})
+            datos = "Nombre: {} \nAutor: {} \nAño: {:n} \nEditorial: {}".format(random_b['datos']['name'],random_b['datos']['autor'],random_b['datos']['anio'],random_b['datos']['editorial'])
+            books.remove(random_book)
+            return datos
+        else:
+            set_status()
     else:
-        set_status()
-
+        print("NO hay más libros")
+        return None
 #set_status()
 
 def reset_status():

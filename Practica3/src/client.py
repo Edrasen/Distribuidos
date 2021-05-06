@@ -15,8 +15,7 @@ datos = Label(root,width=40, height=10)
 def pedir_libro():
     datosLibro = c.root.book()
     datos.config(text=datosLibro,bg="white",fg="black",font="Verdana 12")
-    if datosLibro ==None:
-        print("NO hay mas libros")
+    if datosLibro == None:
         datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 20")
         buttonP["state"] = DISABLED
 
