@@ -18,6 +18,7 @@ def pedir_libro():
     if datosLibro ==None:
         print("NO hay mas libros")
         datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 20")
+        buttonP["state"] = DISABLED
 
 buttonP = Button(root,text="Pedir libro",command=pedir_libro)
 
