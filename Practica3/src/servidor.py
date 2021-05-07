@@ -12,6 +12,7 @@ import io
 root=Tk()
 root.title("MULTIPLE CLOCKS")
 root.configure(bg="white")
+#root.geometry("800x420")
 t_clocks = []
 clks = []
 url = ""
@@ -106,14 +107,21 @@ class RPC_Clock(rpyc.Service):
         resp = despach.set_status(1,"Cliente1",clks[1].my_new_t)
         url = despach.portada   
         widget = Label(root, image=ImgFromUrl(url))
-        widget.grid(row=2, column=3)
+        widget.grid(row=2, column=5)
         return resp
     def exposed_book2(self):
-        return despach.set_status(2,"Cliente2",clks[2].my_new_t)
+        resp = despach.set_status(2,"Cliente2",clks[2].my_new_t)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=5)
+        return resp
     def exposed_book3(self):
-        return despach.set_status(3,"Cliente3",clks[3].my_new_t)
-    # def exposed_time(self):
-    #     return clks[0].my_new_t    
+        resp = despach.set_status(3,"Cliente3",clks[3].my_new_t)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=5)
+        return resp
+
 
 
 
