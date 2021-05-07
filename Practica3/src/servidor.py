@@ -27,7 +27,7 @@ class reloj:
 
     def times(self):
         self.current_time=time.strftime("%H:%M:%S")
-        self.clock.config(text=self.current_time,bg="white",fg="blue",font="Verdana 50")
+        self.clock.config(text=self.current_time,bg="white",fg="blue",font="Verdana 20")
         if self.flag:
             self.clock.after(200,self.times)
             #print(self.current_time)
@@ -37,7 +37,7 @@ class reloj:
 
     def stop(self):       
         self.current_time=time.strftime("%H:%M:%S")
-        self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 50")
+        self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 20")
         self.new_time()
 
     def new_time(self):
@@ -50,13 +50,13 @@ class reloj:
 
     def stop2(self):       
         self.my_new_t = self.my_clock.get_time()
-        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 50")
+        self.clock.config(text=self.my_new_t,bg="white",fg="red",font="Verdana 20")
         self.new_time()
 
 
     def init_new_clk(self):
         self.my_new_t = self.my_clock.get_time()        
-        self.clock.config(text=self.my_new_t,bg="white",fg="blue",font="Verdana 50")
+        self.clock.config(text=self.my_new_t,bg="white",fg="blue",font="Verdana 20")
         if self.flag:
             self.clock.after(100,self.init_new_clk)        
         else:
@@ -73,6 +73,7 @@ def ImgFromUrl(url):
     with urllib.request.urlopen(url) as connection:
         raw_data = connection.read()
     im = Image.open(io.BytesIO(raw_data))
+    im = im.resize((200, 350), Image.ANTIALIAS)
     image = ImageTk.PhotoImage(im)
     return image
 
