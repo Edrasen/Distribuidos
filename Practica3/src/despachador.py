@@ -5,6 +5,7 @@ import random
 url_portadas = []
 books = []
 prestados = []
+portada = ""
 
 client = MongoClient('localhost')
 
@@ -24,12 +25,15 @@ for doc in docs:
 print(books)
 
 def set_status(idCliente,nameClient, horaIn):
+    global portada
     if len(books) > 0:
         datos = ""
         pos = random.randint(0,len(books)-1)
         random_book = books[pos]
         random_b = collection.find_one({"datos.name": random_book})
         if random_b['status'] == "D":
+            portada = url_portadas[pos]
+            print(portada)
             collection.update({
                 "datos.name": random_book}, 
                 { "$set":{ "status": "N"}})

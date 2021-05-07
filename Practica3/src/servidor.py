@@ -5,12 +5,16 @@ from threading import Thread
 from my_Time import my_clk
 from rpyc.utils.server import ThreadedServer
 import despachador as despach
+import urllib.request
+from PIL import Image, ImageTk
+import io
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
 root.configure(bg="white")
 t_clocks = []
 clks = []
+url = ""
 
 class reloj: 
     flag = 1
@@ -63,7 +67,15 @@ class reloj:
 def change(opt):
     clks[opt-1].flag = 0
     print("Modifying clock {}".format(opt-1))
-    
+
+def ImgFromUrl(url):
+    global image
+    with urllib.request.urlopen(url) as connection:
+        raw_data = connection.read()
+    im = Image.open(io.BytesIO(raw_data))
+    image = ImageTk.PhotoImage(im)
+    return image
+
 
 for r in range(0,2):
     for c in range(0,3):
@@ -82,6 +94,7 @@ for tclk in t_clocks:
 despach.reset_status()
 
 class RPC_Clock(rpyc.Service):
+    global url
     def exposed_time1(self):
         return clks[1].my_new_t
     def exposed_time2(self):
@@ -89,7 +102,11 @@ class RPC_Clock(rpyc.Service):
     def exposed_time3(self):
         return clks[3].my_new_t
     def exposed_book1(self):
-        return despach.set_status(1,"Cliente1",clks[1].my_new_t)
+        resp = despach.set_status(1,"Cliente1",clks[1].my_new_t)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=3)
+        return resp
     def exposed_book2(self):
         return despach.set_status(2,"Cliente2",clks[2].my_new_t)
     def exposed_book3(self):
