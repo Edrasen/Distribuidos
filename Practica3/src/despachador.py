@@ -49,6 +49,7 @@ def set_status(idCliente,nameClient, horaIn):
                     }
                     })
             books.remove(random_book)
+            url_portadas.pop(pos)
             return datos
         else:
             set_status()
