@@ -23,7 +23,7 @@ for doc in docs:
 #print(url_portadas)
 print(books)
 
-def set_status():
+def set_status(idCliente,nameClient, horaIn):
     if len(books) > 0:
         datos = ""
         pos = random.randint(0,len(books)-1)
@@ -34,6 +34,16 @@ def set_status():
                 "datos.name": random_book}, 
                 { "$set":{ "status": "N"}})
             datos = "Nombre: {} \nAutor: {} \nAño: {:n} \nEditorial: {}".format(random_b['datos']['name'],random_b['datos']['autor'],random_b['datos']['anio'],random_b['datos']['editorial'])
+            collection.update({
+                "datos.name": random_book},
+                {"$push":{"prestamos": 
+                    {"idCliente": idCliente, 
+                    "idUsuario": nameClient, 
+                    "horaInicio": horaIn, 
+                    "horaFin": "11:11", 
+                    "fecha": "06/05/2021"}
+                    }
+                    })
             books.remove(random_book)
             return datos
         else:

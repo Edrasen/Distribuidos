@@ -88,8 +88,12 @@ class RPC_Clock(rpyc.Service):
         return clks[2].my_new_t
     def exposed_time3(self):
         return clks[3].my_new_t
-    def exposed_book(self):
-        return despach.set_status()
+    def exposed_book1(self):
+        return despach.set_status(1,"Cliente1",clks[1].my_new_t)
+    def exposed_book2(self):
+        return despach.set_status(2,"Cliente2",clks[2].my_new_t)
+    def exposed_book3(self):
+        return despach.set_status(3,"Cliente3",clks[3].my_new_t)
     # def exposed_time(self):
     #     return clks[0].my_new_t    
 
