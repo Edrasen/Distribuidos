@@ -7,7 +7,7 @@ books = []
 prestados = []
 portada = ""
 
-client = MongoClient('localhost')
+client = MongoClient('localhost',2717)
 
 db = client['prac3']
 
@@ -61,4 +61,4 @@ def set_status(idCliente,nameClient, horaIn):
 def reset_status():
     collection.update_many({}, { "$set":{ "status": "D"}})
 
-#reset_status()
+reset_status()

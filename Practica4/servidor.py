@@ -41,9 +41,10 @@ class reloj:
             self.stop()
 
     def stop(self):       
-        self.current_time2=time.strftime("%H:%M:%S")
-        self.current_time=self.current_time2
-        self.clock.config(text=time.strftime("%H:%M:%S"),bg="white",fg="red",font="Verdana 20")
+        #self.current_time2=time.strftime("%H:%M:%S")
+        #self.current_time=self.current_time2
+        self.current_time = self.my_clock.get_time()
+        self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 20")
         self.t_new_c = Thread(target=self.set_time)
         self.t_new_c.daemon = True
         self.t_new_c.start()
