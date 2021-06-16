@@ -4,10 +4,11 @@ import rpyc
 from threading import Thread
 from my_Time import my_clk
 from rpyc.utils.server import ThreadedServer
-#import despachador as despach
+import despachador as despach
 import urllib.request
 from PIL import Image, ImageTk
 import io
+import socket
 
 root=Tk()
 root.title("MULTIPLE CLOCKS")
@@ -41,8 +42,8 @@ class reloj:
             self.stop()
 
     def stop(self):       
-        #self.current_time2=time.strftime("%H:%M:%S")
-        #self.current_time=self.current_time2
+        self.current_time2=time.strftime("%H:%M:%S")
+        self.current_time=self.current_time2
         self.current_time = self.my_clock.get_time()
         self.clock.config(text=self.current_time,bg="white",fg="red",font="Verdana 20")
         self.t_new_c = Thread(target=self.set_time)
@@ -107,7 +108,6 @@ class reloj:
         self.new_time()
         self.times()
 
-
         
 def change(opt):
     clks[opt-1].flag = 0
@@ -139,6 +139,48 @@ for tclk in t_clocks:
 
 #despach.reset_status()
 
+def modificarHora(data):
+    
+    print('Hora establecida {!r}'.format(data.decode()))
+
+def EnviarHora():
+    # Create a UDP socket
+    global clks
+    while True:
+        server_address = ('localhost', 10000)
+        #print(len(clks))
+        for i in range(1,4):
+            sent = sock.sendto(clks[i].current_time.encode(), server_address)      
+        time.sleep(1)
+
+
+
+def recv_time():
+    while True:    
+        try:
+            data, server = sock.recvfrom(4096)
+            new_time = data.decode()
+            parts = new_time.split(':')
+            print("Mensaje recibido:"+ data.decode())
+            #my_new_d = data_decode().split(':')
+            clks[1].my_clock.hora = int(parts[0])
+            clks[2].my_clock.hora = int(parts[0])
+            clks[3].my_clock.hora = int(parts[0])
+
+            clks[1].my_clock.minuto = int(parts[1])
+            clks[2].my_clock.minuto = int(parts[1])
+            clks[3].my_clock.minuto = int(parts[1])
+
+            clks[1].my_clock.segundo = int(parts[2])
+            clks[2].my_clock.segundo = int(parts[2])
+            clks[3].my_clock.segundo = int(parts[2])
+
+        except:
+            print('No se pudo enviar')
+        #time.sleep(4)
+
+        
+
 class RPC_Clock(rpyc.Service):
     global url
     def exposed_time1(self):
@@ -147,24 +189,24 @@ class RPC_Clock(rpyc.Service):
         return clks[2].current_time
     def exposed_time3(self):
         return clks[3].current_time
-    # def exposed_book1(self):
-    #     resp = despach.set_status(1,"Cliente1",clks[1].current_time)
-    #     url = despach.portada   
-    #     widget = Label(root, image=ImgFromUrl(url))
-    #     widget.grid(row=2, column=5)
-    #     return resp
-    # def exposed_book2(self):
-    #     resp = despach.set_status(2,"Cliente2",clks[2].current_time)
-    #     url = despach.portada   
-    #     widget = Label(root, image=ImgFromUrl(url))
-    #     widget.grid(row=2, column=5)
-    #     return resp
-    # def exposed_book3(self):
-    #     resp = despach.set_status(3,"Cliente3",clks[3].current_time)
-    #     url = despach.portada   
-    #     widget = Label(root, image=ImgFromUrl(url))
-    #     widget.grid(row=2, column=5)
-    #     return resp
+    def exposed_book1(self):
+        resp = despach.set_status(1,"Cliente1",clks[1].current_time)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=5)
+        return resp
+    def exposed_book2(self):
+        resp = despach.set_status(2,"Cliente2",clks[2].current_time)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=5)
+        return resp
+    def exposed_book3(self):
+        resp = despach.set_status(3,"Cliente3",clks[3].current_time)
+        url = despach.portada   
+        widget = Label(root, image=ImgFromUrl(url))
+        widget.grid(row=2, column=5)
+        return resp
 
 
 
@@ -182,7 +224,17 @@ boton4.grid(row=4, column=2)
 if __name__ == "__main__":
     server = ThreadedServer(RPC_Clock, port=12345)
     print("Server started...")
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s = Thread(target=server.start)
     s.daemon = True
     s.start()
+
+    e=Thread(target=EnviarHora)
+    e.daemon=True
+    e.start()
+
+    r=Thread(target=recv_time)
+    r.daemon=True
+    r.start()
+
     root.mainloop()
