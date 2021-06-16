@@ -4,7 +4,7 @@ import rpyc
 from threading import Thread
 from my_Time import my_clk
 from rpyc.utils.server import ThreadedServer
-import despachador as despach
+#import despachador as despach
 import urllib.request
 from PIL import Image, ImageTk
 import io
@@ -137,7 +137,7 @@ for tclk in t_clocks:
     tclk.daemon = True
     tclk.start()
 
-despach.reset_status()
+#despach.reset_status()
 
 class RPC_Clock(rpyc.Service):
     global url
@@ -147,24 +147,24 @@ class RPC_Clock(rpyc.Service):
         return clks[2].current_time
     def exposed_time3(self):
         return clks[3].current_time
-    def exposed_book1(self):
-        resp = despach.set_status(1,"Cliente1",clks[1].current_time)
-        url = despach.portada   
-        widget = Label(root, image=ImgFromUrl(url))
-        widget.grid(row=2, column=5)
-        return resp
-    def exposed_book2(self):
-        resp = despach.set_status(2,"Cliente2",clks[2].current_time)
-        url = despach.portada   
-        widget = Label(root, image=ImgFromUrl(url))
-        widget.grid(row=2, column=5)
-        return resp
-    def exposed_book3(self):
-        resp = despach.set_status(3,"Cliente3",clks[3].current_time)
-        url = despach.portada   
-        widget = Label(root, image=ImgFromUrl(url))
-        widget.grid(row=2, column=5)
-        return resp
+    # def exposed_book1(self):
+    #     resp = despach.set_status(1,"Cliente1",clks[1].current_time)
+    #     url = despach.portada   
+    #     widget = Label(root, image=ImgFromUrl(url))
+    #     widget.grid(row=2, column=5)
+    #     return resp
+    # def exposed_book2(self):
+    #     resp = despach.set_status(2,"Cliente2",clks[2].current_time)
+    #     url = despach.portada   
+    #     widget = Label(root, image=ImgFromUrl(url))
+    #     widget.grid(row=2, column=5)
+    #     return resp
+    # def exposed_book3(self):
+    #     resp = despach.set_status(3,"Cliente3",clks[3].current_time)
+    #     url = despach.portada   
+    #     widget = Label(root, image=ImgFromUrl(url))
+    #     widget.grid(row=2, column=5)
+    #     return resp
 
 
 
