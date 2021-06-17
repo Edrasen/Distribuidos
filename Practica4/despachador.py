@@ -1,9 +1,15 @@
 from pymongo import MongoClient, collection
 import json
 import random
+from datetime import date
 
-url_portadas = []
-books = []
+today = date.today()
+
+# dd/mm/YY
+d1 = today.strftime("%d/%m/%Y")
+
+#url_portadas = []
+books = {}
 prestados = []
 portada = ""
 
@@ -19,19 +25,25 @@ docs = collection.find({})
 for doc in docs:
     url = doc['datos']['portada']
     name = doc['datos']['name']
-    url_portadas.append(url)
-    books.append(name)
+    books[name] = url
+#print(books)
+#print(len(books))
+#print(url_portadas)
+
+def getList(dict):
+    return dict.keys()
+      
+
 
 def set_status(idCliente,ipClient, horaIn):
-    global portada
+    global portada, books
+    #print(len(books))
     if len(books) > 0:
         datos = ""
-        pos = random.randint(0,len(books)-1)
-        random_book = books[pos]
+        random_book, portada = random.choice(list(books.items()))
         random_b = collection.find_one({"datos.name": random_book})
         if random_b['status'] == "D":
-            portada = url_portadas[pos]
-            print(portada)
+            print(random_book,portada)
             collection.update({
                 "datos.name": random_book}, 
                 { "$set":{ "status": "N"}})
@@ -42,11 +54,10 @@ def set_status(idCliente,ipClient, horaIn):
                     {"idCliente": idCliente, 
                     "ipUsuario": ipClient, 
                     "horaInicio": horaIn, 
-                    "fecha": "06/05/2021"}
+                    "fecha": d1}
                     }
                     })
-            books.remove(random_book)
-            url_portadas.pop(pos)
+            books.pop(random_book)
             return datos
         else:    
             set_status(idCliente,ipClient, horaIn)
@@ -56,7 +67,15 @@ def set_status(idCliente,ipClient, horaIn):
 #set_status()
 
 def reset_status():
-    global collection,client
+    global books, url_portadas
+    docs = collection.find({})
     collection.update_many({}, { "$set":{ "status": "D"}})
-
-reset_status()
+    books.clear()
+    #docs = collection.find({})
+    for doc in docs:
+        url = doc['datos']['portada']
+        name = doc['datos']['name']
+        books[name] = url
+    print(books)
+    print(len(books))
+#reset_status()

@@ -16,8 +16,8 @@ def pedir_libro():
     datosLibro = c.root.book1()
     print(datosLibro)
     if not datosLibro:
-            datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 12")
-            buttonP["state"] = DISABLED
+        datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 12")
+        buttonP["state"] = DISABLED
     else:
         datos.config(text=datosLibro,bg="white",fg="black",font="Verdana 12")
 

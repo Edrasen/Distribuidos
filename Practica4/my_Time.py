@@ -94,7 +94,7 @@ def calcularHoraGlobal(Horas,address):
         hours = seconds%3600
         #print(promedio)
         aux='{:02}:{:02}:{:02}'.format(int(promedio/3600), int((minuts/4))%60, int((seconds/4)%60))
-        print('La hora establecida es: '+ aux)
+        #print('La hora establecida es: '+ aux)
         Horas.clear()
         return aux
 
@@ -107,7 +107,7 @@ def iniciar():
     my_aux = ""
 
     while True:
-        print('\nEsperando del servidor tiempo')
+        #print('\nEsperando del servidor tiempo')
         data, address = sock.recvfrom(4096)
         #print("Address: ", address)
         if(data.decode()==''):

@@ -163,7 +163,7 @@ def recv_time():
             data, server = sock.recvfrom(4096)
             new_time = data.decode()
             parts = new_time.split(':')
-            print("Mensaje recibido:"+ data.decode())
+            #print("Mensaje recibido:"+ data.decode())
 
             clks[1].my_clock.hora = int(parts[0])
             clks[2].my_clock.hora = int(parts[0])
