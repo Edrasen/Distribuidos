@@ -1,0 +1,53 @@
+
+
+db.books.insertMany([
+    { datos: { name: "La sombra del viento", anio: 2001, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://i.pcom/originals/55/c6/76/55c67683989bdc6499afc6ac6ffeb6a7.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:2348", idUsuario: "Edgar", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El código Da Vinci", anio: 2003, autor: "Dan Brown", editorial: "Umbriel", precio: 250, portada: "http://pm1.narvii.com/6637/f3be04a83a49a882ecd98161de36db0b26ffbf56_00.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:2378", idUsuario: "Juan", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El juego del ángel", anio: 2008, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://images.cdn2.buscalibre.com/fit-in/360x360/03/fc/03fca48f21a6daf7c2ca3ffb54ba63bd.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:7542", idUsuario: "Edgar", fecha: "06/05/2021"}], status: "N"},
+    { datos: { name: "El laberinto de los espíritus", anio: 2016, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://static.eldiario.es/clip/8e89c2d9-bd82-497c-8bc3-dd1bfc36b4e4_9-16-aspect-ratio_default_0.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4235", idUsuario: "Edgar", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El principito", anio: 1943, autor: "Antoine de Saint-Exupéry", editorial: "Reynal & Hitchcock", portada: "https://www.teldeactualidad.com/userfiles/cultura/2014/07/4497/img_el_pirncipito_portada.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:3456", idUsuario: "Karla", hora: "22:00", fecha: "06/05/2021"}], status: "N"},
+    { datos: { name: "La caída de la casa Usher", anio: 1839, autor: "Edgar Allan Poe", editorial: "Createspace", portada: "https://www.nordicalibros.com/wp-content/uploads/2018/07/9788416440009.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:3691", idUsuario: "Daniela", hora: "20:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El instituto", anio: 2019, autor: "Stephen King", editorial: "Plaza & Janés", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9786073184335.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4532", idUsuario: "Erick", hora: "16:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Harry Potter y el prisionero de Azkaban", anio: 1999, autor: "J. K. Rowling", editorial: "Ediciones Salamandra", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9788498389258.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:6754", idUsuario: "Karly", hora: "18:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Soy el número cuatro", anio: 1999, autor: "Pittacus Lore", editorial: "Grupo Editorial Norma", portada: "https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_176593.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0", idUsuario: "Juan", hora: "15:00", fecha: "06/05/2021"}], status: "D"}
+]);    
+    
+
+
+db.books.insertMany([
+    { datos: { name: "La caída de la casa Usher", anio: 1839, autor: "Edgar Allan Poe", editorial: "Createspace", portada: "https://www.nordicalibros.com/wp-content/uploads/2018/07/9788416440009.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:2345", idUsuario: "Daniela", hora: "20:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El instituto", anio: 2019, autor: "Stephen King", editorial: "Plaza & Janés", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9786073184335.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4567", idUsuario: "Erick", hora: "16:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Harry Potter y el prisionero de Azkaban", anio: 1999, autor: "J. K. Rowling", editorial: "Ediciones Salamandra", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9788498389258.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:1357", idUsuario: "Karly", hora: "18:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Soy el número cuatro", anio: 1999, autor: "Pittacus Lore", editorial: "Grupo Editorial Norma", portada: "https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_176593.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4682", idUsuario: "Juan", hora: "15:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "La sombra del viento", anio: 2001, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://i.pcom/originals/55/c6/76/55c67683989bdc6499afc6ac6ffeb6a7.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:2348", idUsuario: "Edgar", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El código Da Vinci", anio: 2003, autor: "Dan Brown", editorial: "Umbriel", precio: 250, portada: "http://pm1.narvii.com/6637/f3be04a83a49a882ecd98161de36db0b26ffbf56_00.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:2378", idUsuario: "Juan", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El juego del ángel", anio: 2008, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://images.cdn2.buscalibre.com/fit-in/360x360/03/fc/03fca48f21a6daf7c2ca3ffb54ba63bd.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:7542", idUsuario: "Edgar", fecha: "06/05/2021"}], status: "N"},
+    { datos: { name: "El laberinto de los espíritus", anio: 2016, autor: "Carlos Ruiz Zafón", editorial: "Planeta", portada: "https://static.eldiario.es/clip/8e89c2d9-bd82-497c-8bc3-dd1bfc36b4e4_9-16-aspect-ratio_default_0.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4235", idUsuario: "Edgar", hora: "22:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El principito", anio: 1943, autor: "Antoine de Saint-Exupéry", editorial: "Reynal & Hitchcock", portada: "https://www.teldeactualidad.com/userfiles/cultura/2014/07/4497/img_el_pirncipito_portada.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:3456", idUsuario: "Karla", hora: "22:00", fecha: "06/05/2021"}], status: "N"},
+    { datos: { name: "La caída de la casa Usher", anio: 1839, autor: "Edgar Allan Poe", editorial: "Createspace", portada: "https://www.nordicalibros.com/wp-content/uploads/2018/07/9788416440009.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:3691", idUsuario: "Daniela", hora: "20:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "El instituto", anio: 2019, autor: "Stephen King", editorial: "Plaza & Janés", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9786073184335.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:4532", idUsuario: "Erick", hora: "16:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Harry Potter y el prisionero de Azkaban", anio: 1999, autor: "J. K. Rowling", editorial: "Ediciones Salamandra", portada: "https://www.sanborns.com.mx/imagenes-sanborns-ii/1200/9788498389258.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0.1:6754", idUsuario: "Karly", hora: "18:00", fecha: "06/05/2021"}], status: "D"},
+    { datos: { name: "Soy el número cuatro", anio: 1999, autor: "Pittacus Lore", editorial: "Grupo Editorial Norma", portada: "https://cdn.gandhi.com.mx/media/catalog/product/cache/1/image/370x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_1165_1_176593.jpg" }, 
+    prestamos: [{ ipCliente: "127.0.0", idUsuario: "Juan", hora: "15:00", fecha: "06/05/2021"}], status: "D"}
+]);

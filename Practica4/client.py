@@ -15,10 +15,12 @@ datos = Label(root,width=40, height=10)
 def pedir_libro():
     datosLibro = c.root.book1()
     print(datosLibro)
-    datos.config(text=datosLibro,bg="white",fg="black",font="Verdana 12")
-    if datosLibro == None:
-        datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 12")
-        buttonP["state"] = DISABLED
+    if not datosLibro:
+            datos.config(text="NO hay más libros", bg="white",fg="red",font="Verdana 12")
+            buttonP["state"] = DISABLED
+    else:
+        datos.config(text=datosLibro,bg="white",fg="black",font="Verdana 12")
+    
 
 buttonP = Button(root,text="Pedir libro",command=pedir_libro)
 

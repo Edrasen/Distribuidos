@@ -10,13 +10,13 @@ from PIL import Image, ImageTk
 import io
 import socket
 
+
 root=Tk()
 root.title("MULTIPLE CLOCKS")
 root.configure(bg="white")
 #root.geometry("800x420")
 t_clocks = []
 clks = []
-url = ""
 
 class reloj: 
     flag = 1
@@ -182,7 +182,6 @@ def recv_time():
         
 
 class RPC_Clock(rpyc.Service):
-    global url
     def exposed_time1(self):
         return clks[1].current_time
     def exposed_time2(self):
@@ -190,19 +189,19 @@ class RPC_Clock(rpyc.Service):
     def exposed_time3(self):
         return clks[3].current_time
     def exposed_book1(self):
-        resp = despach.set_status(1,"Cliente1",clks[1].current_time)
+        resp = despach.set_status("127.0.0.1:0402","Cliente1",clks[1].current_time)
         url = despach.portada   
         widget = Label(root, image=ImgFromUrl(url))
         widget.grid(row=2, column=5)
         return resp
     def exposed_book2(self):
-        resp = despach.set_status(2,"Cliente2",clks[2].current_time)
+        resp = despach.set_status("127.0.0.1:0202","Cliente2",clks[2].current_time)
         url = despach.portada   
         widget = Label(root, image=ImgFromUrl(url))
         widget.grid(row=2, column=5)
         return resp
     def exposed_book3(self):
-        resp = despach.set_status(3,"Cliente3",clks[3].current_time)
+        resp = despach.set_status("127.0.0.1:0106","Cliente3",clks[3].current_time)
         url = despach.portada   
         widget = Label(root, image=ImgFromUrl(url))
         widget.grid(row=2, column=5)

@@ -11,9 +11,8 @@ db = None
 collection = None
 docs =  None
 
-
-try:
-    client = MongoClient('localhost',2717, serverSelectionTimeoutMS=100)
+def keep_conn():
+    global db,collection,docs,url_portadas,url,client
     db = client['prac3']
 
     collection = db['books']
@@ -25,47 +24,33 @@ try:
         name = doc['datos']['name']
         url_portadas.append(url)
         books.append(name)
-    #print("Connected in localhost at port 2717")
-    print(url_portadas)
-    print(books)
-except:
+
+
+def conn():
+    global url_portadas,books,prestados,portada,client,db,collection,docs
     try:
-        print("Port 2717 not available trying to connect with 2727 port")
-        client = MongoClient('localhost',2727)
-        db = client['prac3']
-
-        collection = db['books']
-
-        docs = collection.find({})
-
-        for doc in docs:
-            url = doc['datos']['portada']
-            name = doc['datos']['name']
-            url_portadas.append(url)
-            books.append(name)
-        print("Connected in localhost at port 2727")
-        print(url_portadas)
-        print(books)
+        client = MongoClient("mongodb://localhost:2717,localhost:2727,localhost:2737?replicaSet=myReplicaSetD")
+        # client = MongoClient('localhost',2717, serverSelectionTimeoutMS=100)
+        keep_conn()
+        # print("Connected in localhost at port 2717")
     except:
-        try:
-            print("Port 2727 not available trying to connect with 2737 port")
-            client = MongoClient('localhost',2737)
-            print("Connected in localhost at port 2737")
-            db = client['prac3']
+        print("Somethig went wrong :(")
+        # try:
+        #     print("Port 2717 not available trying to connect with 2727 port")
+        #     client = MongoClient('localhost',2727)
+        #     keep_conn()
+        #     print("Connected in localhost at port 2727")
 
-            collection = db['books']
+        # except:
+        #     try:
+        #         print("Port 2727 not available trying to connect with 2737 port")
+        #         client = MongoClient('localhost',2737)
+        #         print("Connected in localhost at port 2737")
+        #         keep_conn()
+        #     except:
+        #         print("There is no ports availables")
 
-            docs = collection.find({})
-
-            for doc in docs:
-                url = doc['datos']['portada']
-                name = doc['datos']['name']
-                url_portadas.append(url)
-                books.append(name)
-            print(url_portadas)
-            print(books)
-        except:
-            print("There is no ports availables")
+conn()
 
     #reset_status()
 
@@ -103,7 +88,7 @@ def set_status(idCliente,ipClient, horaIn):
 #set_status()
 
 def reset_status():
+    global collection,client
     collection.update_many({}, { "$set":{ "status": "D"}})
 
-
-reset_status()
+#reset_status()

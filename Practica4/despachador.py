@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, collection
 import json
 import random
 
@@ -7,7 +7,8 @@ books = []
 prestados = []
 portada = ""
 
-client = MongoClient('localhost',2727)
+
+client = MongoClient("mongodb://localhost:2717,localhost:2727,localhost:2737/?replicaSet=myReplicaSetD")
 
 db = client['prac3']
 
@@ -21,10 +22,7 @@ for doc in docs:
     url_portadas.append(url)
     books.append(name)
 
-#print(url_portadas)
-print(books)
-
-def set_status(idCliente,nameClient, horaIn):
+def set_status(idCliente,ipClient, horaIn):
     global portada
     if len(books) > 0:
         datos = ""
@@ -42,23 +40,23 @@ def set_status(idCliente,nameClient, horaIn):
                 "datos.name": random_book},
                 {"$push":{"prestamos": 
                     {"idCliente": idCliente, 
-                    "idUsuario": nameClient, 
+                    "ipUsuario": ipClient, 
                     "horaInicio": horaIn, 
-                    "horaFin": "11:11", 
                     "fecha": "06/05/2021"}
                     }
                     })
             books.remove(random_book)
             url_portadas.pop(pos)
             return datos
-        else:
-            set_status()
+        else:    
+            set_status(idCliente,ipClient, horaIn)
     else:
         print("NO hay más libros")
         return None
 #set_status()
 
 def reset_status():
+    global collection,client
     collection.update_many({}, { "$set":{ "status": "D"}})
 
 reset_status()
