@@ -17,6 +17,8 @@ root.configure(bg="white")
 #root.geometry("800x420")
 t_clocks = []
 clks = []
+hard_flag = 1
+
 
 class reloj: 
     flag = 1
@@ -118,7 +120,7 @@ def ImgFromUrl(url):
     with urllib.request.urlopen(url) as connection:
         raw_data = connection.read()
     im = Image.open(io.BytesIO(raw_data))
-    im = im.resize((200, 350), Image.ANTIALIAS)
+    im = im.resize((250, 350), Image.ANTIALIAS)
     image = ImageTk.PhotoImage(im)
     return image
 
@@ -162,7 +164,7 @@ def recv_time():
             new_time = data.decode()
             parts = new_time.split(':')
             print("Mensaje recibido:"+ data.decode())
-            #my_new_d = data_decode().split(':')
+
             clks[1].my_clock.hora = int(parts[0])
             clks[2].my_clock.hora = int(parts[0])
             clks[3].my_clock.hora = int(parts[0])
@@ -182,17 +184,18 @@ def recv_time():
         
 
 class RPC_Clock(rpyc.Service):
+    global hard_flag
     def exposed_time1(self):
-        return clks[1].current_time
+        return clks[1].current_time, hard_flag
     def exposed_time2(self):
-        return clks[2].current_time
+        return clks[2].current_time, hard_flag
     def exposed_time3(self):
-        return clks[3].current_time
+        return clks[3].current_time, hard_flag
     def exposed_book1(self):
         resp = despach.set_status("127.0.0.1:0402","Cliente1",clks[1].current_time)
         url = despach.portada   
         widget = Label(root, image=ImgFromUrl(url))
-        widget.grid(row=2, column=5)
+        widget.grid(row=2, column=5, pady=5, padx=5)
         return resp
     def exposed_book2(self):
         resp = despach.set_status("127.0.0.1:0202","Cliente2",clks[2].current_time)
@@ -206,7 +209,16 @@ class RPC_Clock(rpyc.Service):
         widget = Label(root, image=ImgFromUrl(url))
         widget.grid(row=2, column=5)
         return resp
+    def exposed_reset(self):
+        despach.reset_status()
 
+
+def hard_Reset():
+    global hard_flag
+    hard_flag = 0
+    despach.reset_status()
+    time.sleep(2)
+    hard_flag = 1
 
 
 
@@ -218,6 +230,8 @@ boton4 = Button(root,text="MODIFICAR 2",command=lambda: change(3))
 boton4.grid(row=4, column=1)
 boton4 = Button(root,text="MODIFICAR 3",command=lambda: change(4))
 boton4.grid(row=4, column=2)
+botonR = Button(root,text="REINICIAR", command=hard_Reset)
+botonR.grid(row=3, column=5)
 
 
 if __name__ == "__main__":
